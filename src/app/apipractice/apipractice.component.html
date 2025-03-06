@@ -1,0 +1,100 @@
+<p>apipractice works!</p>
+<button (click)="addNewData()">open</button>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm">
+            <div class="card m-3">
+                <div class="card-header">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4>Demo API Practice</h4>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" (click)="addNewData()">
+                            Add Data
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-bordered ">
+                        <thead class="bg-dark-subtle p-3">
+                            <th>Sr. No.</th>
+                            <th>Name</th>
+                            <th>Designation</th>
+                            <th>Contact</th>
+                            <th>State</th>
+                            <th>Country</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of userList; let i=index">
+                                <td>{{i+1}} </td>
+                                <td>{{user.name}} </td>
+                                <td>{{user.designation}} </td>
+                                <td>{{user.contact}} </td>
+                                <td>{{user.state}} </td>
+                                <td>{{user.country}} </td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-primary" (click)="editrecord(user.id) ">Edit</button>
+                                        <button class="btn btn-danger" (click)="deleterecord(user.id) ">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+            <form action="" [formGroup]="userserviceform">
+                <div id="exampleModal" class="" tabindex="-1" aria-labelledby="exampleModalLabel">
+                    <div class=" modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Name</label>
+                                    <input type="name" class="form-control" id="exampleInputEmail1"
+                                        formControlName="name" aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Designation</label>
+                                    <input type="username" class="form-control" id="exampleInputEmail1"
+                                        formControlName="designation" aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Phone</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        formControlName="contact" aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">State</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        formControlName="state" aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Country</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        formControlName="country" aria-describedby="emailHelp">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" (click)="saveuser()">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Modal -->

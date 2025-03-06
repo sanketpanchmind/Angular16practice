@@ -1,0 +1,18 @@
+<p>angpractice1 works!</p>
+
+
+<input type="radio" name="rd1" (click)="changeradio(true)" />Radio-1
+<input type="radio" name="rd1" (click)="changeradio(false)" />Radio-2
+
+<div *ngIf="radio; else elseBlock">
+    This is Radio -1
+</div>
+<ng-template #elseBlock>
+
+    <div>
+        this is Radio-2
+    </div>
+</ng-template>
+
+
+<a routerLink="../demoroute1">Navigate to demo route 1</a>

@@ -1,0 +1,47 @@
+<div class="container">
+    <!-- TDFs -->
+    <form #useForm="ngForm" novalidate (ngSubmit)="onSubmit()">
+
+
+        {{useForm.value | json}}
+
+        <hr>
+
+        {{userModel | json}}
+
+
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Name</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="userName"
+                pattern="^[A-Za-z ]+$" #name="ngModel" [class.is-invalid]="name.invalid"
+                [(ngModel)]="userModel.userName" required>
+            <!-- <small class="text-danger" [class.d-none]="name.valid || name.untouched">Invalid</small> -->
+            <div *ngIf="name.errors ">
+                <small class="text-danger" *ngIf="name.errors?.['required']">Empty field not allowed</small>
+                <small class="text-danger" *ngIf="name.errors?.['pattern']">Only Characters allowed</small>
+            </div>
+
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="emaill"
+                #email="ngModel" [class.is-invalid]="email.invalid" [(ngModel)]="userModel.email" required>
+        </div>
+        <div class="mb-3">
+            <select class="form-select" name="topic" #topic="ngModel"
+                [class.is-invalid]="topicHasError && topic.touched" (blur)="validatetopic(topic.value)"
+                [(ngModel)]="userModel.topic">
+                <option value="default">Select Intersted Topic</option>
+                <option *ngFor="let topic of topics">{{topic}}</option>
+            </select>
+            <small class="text-danger" [class.d-none]="!topicHasError || topic.untouched">Please select topic</small>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="subscriber" #subcriber="ngModel"
+                [class.is-invalid]="subcriber.invalid" [(ngModel)]="userModel.subscriber">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary" [class.disabled]="useForm.invalid">Submit</button>
+    </form>
+
+</div>

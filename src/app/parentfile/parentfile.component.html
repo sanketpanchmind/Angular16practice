@@ -1,0 +1,11 @@
+<p>parentfile works!</p>
+
+
+<h2>Parent Component</h2>
+<app-childfile [childMessage]="messagefromParent" (messageevent)="receiveMessage($event)"></app-childfile>
+<p>Message from Child: {{ messagefromChild }}</p>
+
+
+<app-childfile [secondchildmessage]="secmsg"></app-childfile>
+
+<router-outlet></router-outlet>

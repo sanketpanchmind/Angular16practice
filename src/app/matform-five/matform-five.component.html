@@ -1,0 +1,95 @@
+<div class="container-fluid">
+    <div class="row mt-4">
+        <div class="col-sm-8">
+            <h4>User List</h4>
+            <table class="table">
+                <thead>
+                    <th>Sr. No.</th>
+                    <th>Name</th>
+                    <th>Mobile Number</th>
+                    <!-- <th>Street</th>
+                    <th>City</th> -->
+                    <th>Gender</th>
+                    <th>Languages</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of userFormArr; let i=index">
+                        <td>{{i+1}} </td>
+                        <td>{{user.name}} </td>
+                        <td>{{user.mobno}} </td>
+                        <!-- <td>{{user.address}} </td> -->
+                        <!-- <td>{{user.city}} </td> -->
+                        <td>{{user.gender}} </td>
+                        <td>{{user.languages}} </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-primary" (click)="editRec(user.id) ">Edit</button>
+                                <button class="btn btn-danger" (click)="deleteRec(user.id) ">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-4">
+            <h4>Add New User Form</h4>
+            <form [formGroup]="userForm">
+                <div class="mb-2">
+                    <label for="">Name</label>
+                    <input class="form-control" type="text" formControlName="name">
+                </div>
+                <div class="mb-2">
+                    <label for="">Mobile Number</label>
+                    <div formArrayName="mobno">
+                        <div *ngFor="let mb of userForm.get('mobno').controls; let i=index">
+                            <input type="text" [formControlName]="i">
+                            <div class="d-flex gap-2">
+                                <button (click)="deleteno(i)">Delete</button>
+                                <button (click)="addno()">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="">Address</label>
+                    <div formArrayName="address">
+                        <div *ngFor="let addr of userForm.get('address').controls; let i=index ">
+                            <div class="d-flex gap-2" [formGroupName]="i">
+                                <input type="text" placeholder="street" formControlName="street">
+                                <input type="text" placeholder="city" formControlName="city">
+                                <div class="d-flex gap-2">
+                                    <button class="">delete</button>
+                                    <button class="" (click)="addAddress()">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="">Gender</label>
+                    <div class="d-flex gap-2">
+                        <input class="" type="radio" value="Male" formControlName="gender">Male
+                        <input class="" type="radio" value="Female" formControlName="gender">Female
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="">Select Languages</label>
+                    <select id="" class="form-control" formControlName="languages">
+                        <option value="Angular">Angular</option>
+                        <option value="React">React</option>
+                        <option value="Vue">Vue JS</option>
+                        <option value="C#">C#</option>
+                        <option value="Java">Java</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-secondary">Clear</button>
+                        <button class="btn btn-primary" (click)="saveuser()">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

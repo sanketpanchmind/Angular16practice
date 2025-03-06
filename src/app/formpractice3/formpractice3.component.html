@@ -1,0 +1,43 @@
+<h4>Form Practice 3</h4>
+
+<form action="" [formGroup]="registerform" (ngSubmit)="register()">
+    <div class="mb-2">
+        <div>Fullaname</div>
+        <input type="text" placeholder="Full Name" formControlName="fullname">
+    </div>
+    <div class="mb-2">
+        <label for="">Skills</label>
+        <div formArrayName="skills">
+            <div *ngFor="let ctrl of registerform.get('skills').controls; let i=index  ">
+                <input type="text" placeholder="enter skill" class="form-control" [formControlName]="i">
+                <button type="button" (click)="remove(ctrl)">Delete</button>
+            </div>
+        </div>
+        <button (click)="addskill()">Add</button>
+    </div>
+    <div class="mb-2">
+        <label for="">Address</label>
+        <div formArrayName="address">
+            <div *ngFor="let addr of registerform.get('address').controls; let i=index " [formGroupName]="i">
+                <div class="row gx-2 gy-2 mb-2 border p-4">
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="landmark">
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="street">
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" formControlName="city">
+                    </div>
+                </div>
+            </div>
+
+            <div class="float-end px-4 my-2">
+                <button class="btn btn-primary" type="button" (click)="addNewAddr()">Add Address</button>
+            </div>
+        </div>
+    </div>
+    <div class="my-4">
+        <button>Submit</button>
+    </div>
+</form>

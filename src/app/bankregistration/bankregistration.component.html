@@ -1,0 +1,100 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex align-items-center justify-content-between">
+                <h3 class="mb-0">Bank Register</h3>
+                <button class="btn btn-primary" (click)="addbankfn()">Add New Bank</button>
+            </div>
+        </div>
+        <div class="card-header">
+            <form [formGroup]="bankregistration">
+                <div class="row align-items-center gx-2">
+                    <div class="col-sm-4">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Select Organization Name</mat-label>
+                            <mat-select formControlName="organization" id="organization">
+                                <mat-option *ngFor="let org of organizationlistArr; let i=index" [value]="org.id">
+                                    {{org.organizationName}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Search</mat-label>
+                            <input matInput placeholder="" formControlName="search">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-auto">
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-secondary">Clear</button>
+                            <button class="btn btn-primaray" (click)="gettabledata()"> Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="card-body">
+
+            <table mat-table [dataSource]="tblistArr" class="w-100">
+                <ng-container matColumnDef="srno">
+                    <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                    <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="organizationName">
+                    <th mat-header-cell *matHeaderCellDef> Organization Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.organizationName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="bankName">
+                    <th mat-header-cell *matHeaderCellDef> Bank Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.bankName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary"
+                                (click)="onEditdata(element.id,element.organizationName, element.bankName)">Edit</button>
+                            <button class="btn btn-danger"
+                                (click)="ondelete(element.id, element.organizationName) ">Delete</button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+
+
+
+            <!-- <table class="table">
+                <thead>
+                    <tr>
+                        <th>Srno</th>
+                        <th>Org Name</th>
+                        <th>Bank Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tbl of tblistArr; let i=index">
+                        <td>{{i+1}} </td>
+                        <td>{{tbl.organizationName}} </td>
+                        <td>{{tbl.bankName}} </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button>Edit</button>
+                                <button>Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> -->
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+<!-- <h1>Template Driven Form-1</h1>
+
+<form #demoForm1='ngForm' (ngSubmit)="Register(demoForm1)">
+    <div class="mb-2">
+        <div>First Name</div>
+        <input type="text" name="fname" ngModel required fname #fname="ngModel" pattern="^[A-Za-z ]+$">
+        <div *ngIf="fname.invalid">
+            <div class="small text-danger" *ngIf="fname.touched">Please fill the field</div>
+            <div class="text-danger" *ngIf="fname.errors?.['pattern']">Only chars allowed</div>
+        </div>
+    </div>
+    <div class="mb-2">
+        <div>Last Name</div>
+        <input type="text" name="lname" ngModel required lname #lname="ngModel" pattern="^[A-Za-z ]+$">
+        <div *ngIf="lname.invalid">
+            <span class="text-danger" *ngIf="lname.touched">Please fill the field</span>
+            <span class="text-danger" *ngIf="lname.errors?.['pattern']">Invalid last name.</span>
+        </div>
+    </div>
+    <div class="mb-2">
+        <div>Designation</div>
+        <input type="text" name="designation" ngModel required designation #designation="ngModel"
+            pattern="^[A-Za-z ]+$">
+        <div *ngIf="designation.invalid">
+            <span class="text-danger" *ngIf="designation.touched">Please fill the field</span>
+            <span class="text-danger" *ngIf="designation.errors?.['pattern']">Invalid last name.</span>
+        </div>
+    </div>
+    <div class="mb-2">
+        <div class="d-flex gap-2">
+            <input type="radio" name="gender" value="Male" gender ngModel required>Male
+            <input type="radio" name="gender" value="FeMale" gender ngModel required>FeMale
+        </div>
+    </div>
+    <div class="mb-2">
+        <select name="options" ngModel #options="ngModel" required>
+            <option selected>Open this select</option>
+            <option value="opt-1">opt-1</option>
+            <option value="opt-2">opt-2</option>
+        </select>
+        <span *ngIf="options?.touched && options?.invalid">
+            <span *ngIf="options.errors?.['required']">select 1 options </span>
+        </span>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn btn-secondary">Clear</button>
+        <button class="btn btn-primary" [disabled]="!demoForm1.valid">Submit</button>
+    </div>
+</form> -->
+<div class="container-fluid">
+    <h2>Tdf Form -2</h2>
+    <form #demoForm2="ngForm" (ngSubmit)="demoForm2.form.valid && Register2(demoForm2)" novalidate>
+        <div class="row align-items-center">
+            <div class="col-sm-3">
+                <div class="d-flex flex-column gap-2">
+                    <div>Full Name</div>
+                    <input type="text" placeholder="Full Name" name="fullname" fullname #fullname="ngModel" ngModel
+                        pattern="^[A-Za-z ]+$" required>
+                    <div class="text-danger small" *ngIf="fullname.invalid">
+                        <span *ngIf="fullname.touched || demoForm2.submitted">Please fill the field</span>
+                        <span *ngIf="fullname.errors?.['pattern']">Enter Valid Name</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="d-flex gap-2">
+                    <h6>Gender</h6>
+                    <input type="radio" value="Male" name="gender" gender #gender="ngModel" ngModel required>Male
+                    <input type="radio" value="female" name="gender" gender #gender="ngModel" ngModel required>Female
+                </div>
+                <div *ngIf="gender.invalid">
+                    <div class="text-danger" *ngIf="gender.touched || demoForm2.submitted">Select gender.</div>
+                </div>
+
+            </div>
+            <div class="col-sm-3">
+                <div class="d-flex gap-2">
+                    <h6>Activities</h6>
+                    <input type="checkbox" value="Indoor" name="activities" activity #activity="ngModel" ngModel
+                        required>Indoor
+                    <input type="checkbox" value="Outdoor" name="activities" activity #activity="ngModel" ngModel
+                        required>Outdoor
+                </div>
+                <div *ngIf="activity.invalid">
+                    <div class="text-danger small" *ngIf="activity.touched || demoForm2.submitted">Please select atleast
+                        1
+                        activity.</div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <select class="form-select" aria-label="Default select example" name="language" language
+                    #language="ngModel" ngModel required>
+                    <option selected>Open this select menu</option>
+                    <option value="English">English</option>
+                    <option value="Marathi">Marathi</option>
+                    <option value="Hindi">Hindi</option>
+                </select>
+                <div *ngIf="(language.touched || demoForm2.submitted) && language?.invalid">
+                    <span class="text-danger" *ngIf="language?.errors?.['required']">Please select 1 options from
+                        dropdown</span>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex gap-2 my-4">
+            <button>Clear</button>
+            <button>Submit</button>
+        </div>
+    </form>
+</div>

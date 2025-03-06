@@ -1,0 +1,106 @@
+<div class="container-fluid">
+    <div class="d-flex align-items-center justify-content-between border-bottom">
+        <h4 class="fw-bold">List User Data</h4>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Add User
+        </button>
+    </div>
+    <div class="row">
+        <table class="table my-5">
+            <thead>
+                <th>Sr. No.</th>
+                <th>FullName</th>
+                <th>Mobile Number</th>
+                <th>Gender</th>
+                <th>Programming Language</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of registeruserArr; let i=index">
+                    <td>{{i+1}} </td>
+                    <td>{{user.name}} </td>
+                    <td>{{user.mobno}} </td>
+                    <td>{{user.gender}} </td>
+                    <td>{{user.languages}} </td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger" (click)="deleteRecord(user.id) ">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<form [formGroup]="registeruser">
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Register User</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row gy-4">
+                        <div class="col-sm-12">
+                            <label for="exampleFormControlInput1" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="name"
+                                placeholder="name@example.com">
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="exampleFormControlInput1" class="form-label">Mobile Number</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1"
+                                formControlName="mobno" placeholder="name@example.com">
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="d-flex gap-4">
+                                <label for="">Gender</label>
+                                <div class="d-flex gap-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value="Male"
+                                            formControlName="gender" id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Male
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value="Female"
+                                            formControlName="gender" id="flexRadioDefault2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Female
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="">Select Programming Languages</label>
+                            <select class="form-select" aria-label="Default select example" formControlName="languages">
+                                <option value="C++">C++ </option>
+                                <option value="Angular">Angular </option>
+                                <option value="React">React </option>
+                                <option value="Vue JS">Vue JS </option>
+                                <option value="C#">C# </option>
+                                <option value="Python">Python </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveuser()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

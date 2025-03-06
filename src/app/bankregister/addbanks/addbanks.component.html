@@ -1,0 +1,46 @@
+<div mat-dialog-title>
+    <div class="d-flex align-items-center justify-content-between">
+        <h4>Add Bank</h4>
+        <mat-icon>close</mat-icon>
+    </div>
+</div>
+<div mat-dialog-content>
+    <form [formGroup]="addbanksform">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Select Organization</mat-label>
+                    <mat-select formControlName="organization">
+                        <mat-option *ngFor="let org of organizationArr; let i=index"
+                            [value]="this.editflag ? org.organizationName : org.id">
+                            {{this.editflag ? org.organizationName : org.id}}</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Select Organization</mat-label>
+                    <mat-select formControlName="organization">
+                        <mat-option *ngFor="let org of organizationArr; let i=index" [value]="org.id">
+                            {{ org.organizationName }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Bank Name</mat-label>
+                    <input matInput placeholder="" formControlName="bank">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-danger">Clear</button>
+                    <div>
+                        <button class="btn btn-primary" (click)="submitdata()">Submit </button>
+                        <button class="btn btn-primary" (click)="EditData()">Update </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
