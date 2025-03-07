@@ -29,7 +29,7 @@ export class AddBankComponent {
     if (this.data) {
       this.editflag = true;
       this.addbanksform.patchValue({
-        organizationname: this.data.org,
+        organizationname: this.data.orgId,
         bankname: this.data.bankname,
         id: this.data.id
       });
@@ -102,7 +102,7 @@ export class AddBankComponent {
 
 
     const params = {
-      organizationId: this.data.orgId,
+      organizationId: this.addbanksform.get('organizationname')?.value,
       bankname: this.addbanksform.get('bankname')?.value,
       createdBy: 1,
       modifiedBy: 1,
@@ -118,7 +118,7 @@ export class AddBankComponent {
     this.masterService.edit(params).subscribe({
       next: (data: any) => {
         console.log("inside update fn --- ", data.responseData);
-        this.addOrgbanks();
+        // this.addOrgbanks();
       },
       error: (error: any) => {
         console.log(error);

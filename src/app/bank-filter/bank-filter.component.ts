@@ -88,6 +88,10 @@ export class BankFilterComponent {
       }
     });
   }
+  clear(){
+    this.filterform.reset();
+    this.bankmastergetAlltblArr = [];
+  }
 
   deletebankdata(id: any) {
     console.log("ID to be deleted --- ", id);
