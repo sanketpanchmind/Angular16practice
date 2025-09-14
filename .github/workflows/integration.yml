@@ -30,7 +30,7 @@ jobs:
         run: npm test -- --watch=false || true
 
       - name: Build Angular app
-        run: ng build --configuration production --base-href "/Angular16practice/"
+        run: ng run build --configuration production
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
