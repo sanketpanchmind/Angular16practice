@@ -10,6 +10,7 @@ describe('AddbankComponent', () => {
   let component: AddbankComponent;
   let fixture: ComponentFixture<AddbankComponent>;
   let service: BankregisterService;
+  let error: string = '';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -65,6 +66,15 @@ describe('AddbankComponent', () => {
 
     expect(service.registernewBank).toHaveBeenCalledWith(1, 'BBC');
 
+  });
+
+  it("should handle API erroron submit", () => {
+    spyOn(service, 'registernewBank').and.returnValue(of({ success: true }));
+
+    component.addbankform.setValue({ organization: '1', bankname: 'BBC' });
+    component.submitnewbank();
+
+    expect(component.error).toBe("API Failed");
   })
 
 
