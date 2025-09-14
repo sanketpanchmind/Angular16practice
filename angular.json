@@ -29,7 +29,7 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "baseHref": "/Github-Live-Action-One/"
+            "baseHref": "/Angular16practice/"
           },
           "configurations": {
             "production": {
