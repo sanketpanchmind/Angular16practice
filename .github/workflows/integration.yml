@@ -2,9 +2,9 @@ name: CI/CD - Angular16 Practice
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
 
 permissions:
   contents: write
@@ -29,8 +29,8 @@ jobs:
       - name: Run tests (optional)
         run: npm test -- --watch=false || true
 
-      - name: Build (production)
-        run: npm run build --configuration production
+      - name: Build Angular app
+        run: ng build --configuration production --base-href "/Angular16practice/"
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
