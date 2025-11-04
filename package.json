@@ -1,6 +1,7 @@
 {
   "name": "angular16practice",
   "version": "0.0.0",
+  "homepage": "https://sanketpanchmind.github.io/Angular16practice/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
