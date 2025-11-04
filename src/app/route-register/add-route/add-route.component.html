@@ -1,0 +1,152 @@
+<div mat-dialog-title>
+    <h2>Add New Route</h2>
+</div>
+<mat-dialog-content>
+    <form [formGroup]="addrouteform">
+        <div class="row">
+            <div class="col-sm">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Organization</mat-label>
+                    <mat-select formControlName="organization" (selectionChange)="onOrganizationChange($event.value)">
+                        <mat-option *ngFor="let org of organizationArray; let i=index"
+                            [value]="org.id">{{org.organizationName}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Unit</mat-label>
+                    <mat-select formControlName="unit">
+                        <mat-option *ngFor="let unit of unitArray; let i=index" [value]="unit.id">{{unit.unitName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Select Route Types</mat-label>
+                    <mat-select formControlName="routetype">
+                        <mat-option *ngFor="let routetype of routetypeArray; let i=index"
+                            [value]="routetype.id">{{routetype.routeType}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Route Code</mat-label>
+                    <input matInput placeholder="" formControlName="routecode">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Route Name</mat-label>
+                    <input matInput placeholder="" formControlName="routename">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Select State</mat-label>
+                    <mat-select formControlName="state" (selectionChange)="getdistricts($event.value)">
+                        <mat-option *ngFor="let state of stateArray; let i=index" [value]="state">{{state.stateName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Select District</mat-label>
+                    <mat-select formControlName="district" (selectionChange)="getTaluka($event.value)">
+                        <mat-option *ngFor="let district of districtArray; let i=index"
+                            [value]="district">{{district.districtName}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Select Taluka</mat-label>
+                    <mat-select formControlName="taluka" (selectionChange)="getVillages($event.value)">
+                        <mat-option *ngFor="let taluka of talukaArray; let i=index"
+                            [value]="taluka">{{taluka.talukaName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Select Town/Village</mat-label>
+                    <mat-select formControlName="village">
+                        <mat-option *ngFor="let village of villageArray; let i=index"
+                            [value]="village">{{village.villageName}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-auto">
+                <div class="d-flex align-items-center gap-2">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Enter Areas / Localities</mat-label>
+                        <input matInput placeholder="" formControlName="area">
+                    </mat-form-field>
+                    <button mat-icon-button (click)="addroute()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="srno">
+                <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.srno}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="state">
+                <th mat-header-cell *matHeaderCellDef> State </th>
+                <td mat-cell *matCellDef="let element"> {{element.stateName }} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="district">
+                <th mat-header-cell *matHeaderCellDef> district </th>
+                <td mat-cell *matCellDef="let element"> {{element.districtName}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="taluka">
+                <th mat-header-cell *matHeaderCellDef> Taluka </th>
+                <td mat-cell *matCellDef="let element"> {{element.talukaName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="village">
+                <th mat-header-cell *matHeaderCellDef> village </th>
+                <td mat-cell *matCellDef="let element"> {{element.villageName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="area">
+                <th mat-header-cell *matHeaderCellDef> Area </th>
+                <td mat-cell *matCellDef="let element"> {{element.areaName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="d-flex align-items-center gap-2">
+                        <button mat-icon-button (click)="edit(element)"> <mat-icon>edit</mat-icon></button>
+                        <button mat-icon-button (click)="delete(element.srno)"> <mat-icon>delete</mat-icon></button>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div class="bg-danger bg-opacity-10 text-danger py-4 text-center border-danger border rounded-1"
+            *ngIf="this.dataSource.data.length == 0">
+            <span>No Data Available</span>
+        </div>
+
+
+    </div>
+</mat-dialog-content>
+<div mat-dialog-actions>
+    <button mat-button>Clear</button>
+    <button mat-button (click)="this.isEdit ? update() : submit()">{{this.isEdit ? 'Update' : 'Submit' }} </button>
+</div>

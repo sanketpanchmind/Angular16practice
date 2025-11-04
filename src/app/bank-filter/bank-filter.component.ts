@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddBankComponent } from './add-bank/add-bank.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class BankFilterComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private fb: FormBuilder, private masterService: MasterService, public dialog: MatDialog) { }
+  constructor(private fb: FormBuilder, private masterService: MasterService, public dialog: MatDialog, private snackBar: MatSnackBar) { }
 
 
   ngOnInit() {
@@ -80,7 +81,12 @@ export class BankFilterComponent {
         if (res.statusCode == 200) {
           this.bankmastergetAlltblArr = res.responseData;
           this.bankmastergetAlltblArr.paginator = this.paginator;
-
+          this.snackBar.open("Data Fetched Successfully", 'Close', {
+            duration: 1000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            panelClass: ['snack-success'] // Optional for custom styling
+          });
         }
       },
       error: (err: any) => {
@@ -88,20 +94,33 @@ export class BankFilterComponent {
       }
     });
   }
-  clear(){
+  clear() {
     this.filterform.reset();
     this.bankmastergetAlltblArr = [];
   }
 
   deletebankdata(id: any) {
-    console.log("ID to be deleted --- ", id);
 
+    const orgId = this.filterform.get('organizationname')?.value;
+    const bank = this.filterform.get('search')?.value;
+    console.log("ID to be deleted --- ", id);
+  
+    debugger;
     const params = { id: id };
 
     this.masterService.deletebank(params).subscribe({
       next: (data: any) => {
+      debugger;
+        console.log("deleting ID - ", data);
+        this.submitfilter();
+        debugger;
+        this.snackBar.open("Data Deleteed Successfully", "Close", {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: ['snack-danger'],
+        });
 
-        console.log("deleting ID - ", data)
       },
       error: (error: any) => {
         console.log(error);

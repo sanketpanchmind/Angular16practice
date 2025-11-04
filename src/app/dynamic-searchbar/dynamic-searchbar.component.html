@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div [formGroup]="searchform">
+                <input type="text" formControlName="searchControl" placeholder="Search users..." />
+              </div>
+              
+              <ul>
+                <li *ngFor="let user of filteredUsers$ | async">
+                  {{ user }}
+                </li>
+              </ul>
+
+
+              
+              
+        </div>
+
+        <button (click)="convert()">convert Array to Observable</button>
+        <button (click)="evennumbers()">getEven Nos</button>
+
+
+        <input type="text" #user id="user">
+
+    </div>
+</div>

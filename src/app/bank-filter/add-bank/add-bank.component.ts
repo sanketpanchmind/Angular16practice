@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MasterService } from 'src/app/service/master.service';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-bank',
@@ -21,7 +22,7 @@ export class AddBankComponent {
   filteredOptions!: Observable<any[]>;
 
 
-  constructor(private fb: FormBuilder, public dialog: MatDialog, private masterService: MasterService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private fb: FormBuilder, public dialog: MatDialog, private masterService: MasterService, @Inject(MAT_DIALOG_DATA) public data: any, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.createForm();
@@ -86,6 +87,12 @@ export class AddBankComponent {
       next: (res: any) => {
         if (res.statusCode === 200) {
           console.log("Data Inserted");
+          this.snackBar.open("New Record Added ","Close",{
+            duration: 2000,
+            verticalPosition:'top',
+            horizontalPosition:'right',
+            panelClass: ['snack-success']
+          })
         }
       },
       error: (error: any) => {

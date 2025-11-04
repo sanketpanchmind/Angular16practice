@@ -1,0 +1,117 @@
+<mat-card>
+    <mat-card-header>
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <h3>Route Register</h3>
+            <button mat-flat-button class="btn-primary" (click)="addroute()">Add Route</button>
+        </div>
+    </mat-card-header>
+    <mat-card-content class="card-body">
+        <form [formGroup]="routeRegisterFilterForm" (ngSubmit)="getFilteredData()">
+            <div class="filter-controls">
+                <div class="row gx-2">
+                    <div class="col-sm">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Organization</mat-label>
+                            <mat-select formControlName="organization"
+                                (selectionChange)="onOrganizationChange($event.value)">
+                                <mat-option *ngFor="let org of organizationArray; let i=index"
+                                    [value]="org.id">{{org.organizationName}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Unit</mat-label>
+                            <mat-select formControlName="unit">
+                                <mat-option *ngFor="let unit of unitArray; let i=index"
+                                    [value]="unit.id">{{unit.unitName}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-3">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Select Route Types</mat-label>
+                            <mat-select formControlName="routetype">
+                                <mat-option *ngFor="let routetype of routetypeArray; let i=index"
+                                    [value]="routetype.id">{{routetype.routeType}} </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Searc by Route Name</mat-label>
+                            <input matInput placeholder="" formControlName="searchRouteName">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="d-flex gap-2">
+                            <button mat-icon-button type="button" (click)="getFilteredData()">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                            <button mat-icon-button type="button">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="srno">
+                    <th mat-header-cell *matHeaderCellDef> Sr.No. </th>
+                    <td mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="organizationName">
+                    <th mat-header-cell *matHeaderCellDef> Organization Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.organizationName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="unitName">
+                    <th mat-header-cell *matHeaderCellDef> Unit NAme </th>
+                    <td mat-cell *matCellDef="let element"> {{element.unitName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="routeCode">
+                    <th mat-header-cell *matHeaderCellDef> Route Code </th>
+                    <td mat-cell *matCellDef="let element"> {{element.routeCode}} </td>
+                </ng-container>
+                <ng-container matColumnDef="routeName">
+                    <th mat-header-cell *matHeaderCellDef> Route NAme </th>
+                    <td mat-cell *matCellDef="let element"> {{element.routeName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="routeType">
+                    <th mat-header-cell *matHeaderCellDef> Route Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.routeType}} </td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="d-flex align-items-center gap-2">
+                            <button mat-flat-button class="btn-primary" (click)="view(element)">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                            <button mat-flat-button class="btn-primary" (click)="delete(element)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div class="bg-danger bg-opacity-10 text-danger py-4 text-center border-danger border rounded-1"
+                *ngIf="this.dataSource.data.length == 0">
+                <span>No Data Available</span>
+            </div>
+            <div *ngIf="this.dataSource.data.length >= 10">
+                <mat-paginator #paginator [pageSizeOptions]="[this.dataSource.data.length]" showFirstLastButtons
+                    aria-label="Select page of elements">
+                </mat-paginator>
+            </div>
+
+        </div>
+    </mat-card-content>
+</mat-card>

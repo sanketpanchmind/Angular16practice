@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <form [formGroup]="filterform" (ngSubmit)="submitfilter()">
+        <div class="row gx-2">
+            <div class="col-sm-3">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Organization</mat-label>
+                    <mat-select formControlName="organizationname" (selectionChange)="unitlist()">
+                        <mat-option *ngFor="let org of organizationtblArray; let i=index" 
+                            [value]="org.id">
+                            {{org.organizationName}} 
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Unit Name</mat-label>
+                    <mat-select formControlName="unitname" (selectionChange)="categorylist()" [disabled]="unitdisabled">
+                        <mat-option  *ngFor="let org of unitlistArray; let i=index" [value]="org.id">{{org.unitName}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Category Name</mat-label>
+                    <mat-select formControlName="categoryname" [disabled]="categorydisabled">
+                        <mat-option *ngFor="let category of categoryArray; let i=index" [value]="category.id">{{category.categoryName}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+                <input type="search" formControlName="search">
+            </div>
+            <div class="col-sm-auto">
+                <button>search</button>
+            </div>
+        </div>
+    </form>
+</div>

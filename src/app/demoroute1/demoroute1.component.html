@@ -2,3 +2,42 @@
 
 
 <button (click)="back()">Back to Angular PRactice Compoenent</button>
+
+<form [formGroup]="addform">
+    <div class="mb-2">
+        <input type="text" formControlName="name" placeholder="name">
+        <button (click)="onSubmit()">add</button>
+        <button type="button" (click)="converuppercase()">uppercase</button>
+    </div>
+    {{lowercaseversion}}
+
+    {{uppercaseversion}}
+</form>
+
+
+<form #valueform="ngForm" (ngSubmit)="tdfsubmit()">
+    <input type="text" name="userinput" [(ngModel)]="userinput">
+    <button>add</button>
+    {{userinput}}
+</form>
+
+
+<h6>expample of rxjs</h6>
+<div>
+    <input type="text" [formControl]="searchControl">
+    <ul>
+        <li *ngFor="let arr of resultArr">{{arr}} </li>
+    </ul>
+</div>
+
+
+<mat-form-field class="example-full-width">
+    <mat-label>Number</mat-label>
+    <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="searchControl"
+        [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let arr of resultArr" [value]="arr">
+            {{ arr }}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

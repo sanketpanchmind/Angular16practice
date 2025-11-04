@@ -26,6 +26,12 @@ import { UiUpdateComponent } from './ui-update/ui-update.component';
 import { ParentfileComponent } from './parentfile/parentfile.component';
 import { ChildfileComponent } from './parentfile/childfile/childfile.component';
 import { BankFilterComponent } from './bank-filter/bank-filter.component';
+import { ProductComponent } from './product/product.component';
+import { DynamicSearchbarComponent } from './dynamic-searchbar/dynamic-searchbar.component';
+import { RenderTranslationComponent } from './render-translation/render-translation.component';
+import { AssetListComponent } from './asset-list/asset-list.component';
+import { LoginComponent } from './login/login.component';
+import { authGuard } from './auth.guard';
 
 
 const routes: Routes = [
@@ -53,7 +59,7 @@ const routes: Routes = [
   { path: 'rxjs', component: ReactiveformComponent },
 
 
-  { path: 'formpractice2', component: FormspracticetwoComponent },
+  { path: 'formpractice2', component: FormspracticetwoComponent, canActivate:[authGuard] },
   { path: 'form3', component: Formpractice3Component },
 
   { path: 'materialform', component: MaterialformPracticeComponent },
@@ -73,6 +79,13 @@ const routes: Routes = [
   { path: 'parent', component: ParentfileComponent },
   { path: 'child', component: ChildfileComponent },
   { path: 'bank-filter', component: BankFilterComponent },
+  { path: 'product', component: ProductComponent },
+  { path: 'dynamicsearchbar', component: DynamicSearchbarComponent },
+  { path: 'translation', component: RenderTranslationComponent },
+  { path: 'asset-list', component: AssetListComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'route-register', loadChildren: () => import('./route-register/route-register.module').then(m => m.RouteRegisterModule) },
+  {path:'route-register', loadChildren: () => import('./route-register/route-register.module').then(m => m.RouteRegisterModule)}
 
 
 

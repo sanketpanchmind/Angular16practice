@@ -18,6 +18,7 @@ export class ApiService {
   getBaseurl(url: string) {
     switch (url) {
       case 'priyadarshaniService': return environment.priyadarshaniService; break;
+      case 'assetService': return environment.assetService; break;
       default: return ''; break;
     }
   }

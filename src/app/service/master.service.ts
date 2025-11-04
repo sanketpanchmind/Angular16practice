@@ -21,6 +21,64 @@ export class MasterService {
     });
   }
 
+  getAllUnits(params: any) {
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'MasterDropdown/GetAllUnit?', false, false, params, 'priyadarshaniService');
+
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == 200) {
+            obj.next(res)
+          }
+          else {
+            obj.error(res)
+          }
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      })
+    })
+  }
+
+  getAllCategory(params: any) {
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'MasterDropdown/GetAssetCategory?', false, false, params, 'priyadarshaniService');
+
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          if (res.statusCode == 200) {
+            obj.next(res);
+          }
+          else {
+            obj.error(res);
+          }
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      })
+
+    })
+  }
+
+  getassetlistdata(params: any, headers:any) {
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'AssetRequest/GetAll?', headers, false, params, 'priyadarshaniService');
+
+      this.apiService.getHttp().subscribe({
+        next: (res: any) => {
+          console.log(res);
+          obj.next(res);
+        },
+        error: (error: any) => {
+          console.log(error);
+          obj.error(error);
+        }
+      })
+    }
+  )
+  }
   bankmastergetAll(orgId: number, textSearch?: string) {
     return new Observable((obj) => {
       const params: any = {
@@ -101,6 +159,7 @@ export class MasterService {
       // Convert params to JSON string if needed
       // const jsonParams = JSON.stringify(params);
 
+
       this.apiService.setHttp('PUT', 'BankMaster/UpdateBank', true, params, false, 'priyadarshaniService');
 
       this.apiService.getHttp().subscribe({
@@ -117,6 +176,69 @@ export class MasterService {
   }
 
 
+
+  // assets mgmt apis
+
+  productcategory() {
+    return new Observable((obj) => {
+      this.apiService.setHttp('GET', 'Master/ProductCategory', false, false, false, 'assetService');
+
+      this.apiService.getHttp().subscribe({
+        next: (data: any) => {
+          console.log("Product Category", data);
+          obj.next(data);
+        },
+        error: (error: any) => {
+          console.log(error);
+          obj.error(error);
+        }
+      })
+    }
+    )
+  }
+
+  createproduct(params: any) {
+
+    return new Observable((obj) => {
+
+      this.apiService.setHttp('POST', 'Product/AddUpdateProduct', false, params, false, 'assetService');
+
+      this.apiService.getHttp().subscribe({
+        next: (data: any) => {
+          console.log("Add Product", data.responseData);
+          obj.next(data);
+        },
+        error: (error: any) => {
+          console.log(error);
+          obj.error(error);
+        }
+      })
+    })
+  }
+
+  filterproduct(params: any) {
+    return new Observable((obj) => {
+
+      this.apiService.setHttp('GET', 'Product/GetAllProductsList', false, false, params, 'assetService');
+
+      this.apiService.getHttp().subscribe({
+        next: (data: any) => {
+          console.log("filter product master file", data.responseData);
+          obj.next(data.responseData);
+        },
+        error: (error: any) => {
+          console.log(error);
+          obj.error(error);
+        }
+      })
+    })
+  }
+
+
+  onLogin(obj: any): Observable<any>{
+    return this.http.post('https://priyadarshaniapi.mahamining.com/Login/UserLogin', obj);
+  }
+  
 
 
 }

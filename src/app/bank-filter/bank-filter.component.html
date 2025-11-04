@@ -56,7 +56,7 @@
                                 <td mat-cell *matCellDef="let element">
                                     <div class="d-flex gap-2">
                                         <button (click)="editbankdata(element.id) ">Edit</button>
-                                        <button (click)="deletebankdata(element.id)">Delete</button>
+                                        <button type="button" (click)="deletebankdata(element.id)">Delete</button>
                                     </div>
                                 </td>
                             </ng-container>

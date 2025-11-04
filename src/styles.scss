@@ -6,3 +6,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-mdc-select-panel-above{
     z-index: 999999 !important;
 }
+
+.custom-snackbar {
+    background-color: #ff5722 !important; /* Change to your desired color */
+    color: white !important; /* Change text color if needed */
+  }
+  
+
+  .snack-success .mdc-snackbar__surface {
+    background-color: #198754 !important;
+    color: #fff !important;
+  }
+  
+  .snack-danger .mdc-snackbar__surface {
+    background-color: #DC3545 !important;
+    color: #fff !important;
+  }
+  
+  .snack-warning .mdc-snackbar__surface {
+    background-color: #FFC107 !important;
+  }
+  
+  .snack-warning .mat-mdc-snack-bar-container,
+  .snack-warning .mdc-snackbar__label {
+    color: #000 !important;
+  }
