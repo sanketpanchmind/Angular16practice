@@ -21,16 +21,16 @@ export class RouteregisterService {
 
   private routelist = 'https://demo-api-hitech.hitechdairy.in/Route/GetAll?UserId=1&pageNo=1&pageSize=10';
 
-  private stateurl = 'https://demo-api-hitech.hitechdairy.in/MasterDropdown/GetAllState';
+  private stateurl = 'https://platform.shauryatechnosoft.com/core-master-service/api/v1/o/state/country/e5ef8fe1-dc26-47f3-80e9-93aefed9d823';
 
   // https://demo-api-hitech.hitechdairy.in/MasterDropdown/GetAllDistricts?StateId=12
-  private districturl = 'https://demo-api-hitech.hitechdairy.in/MasterDropdown/GetAllDistricts';
+  private districturl = 'https://platform.shauryatechnosoft.com/core-master-service/api/v1/o/district/state/';
 
   // https://demo-api-hitech.hitechdairy.in/MasterDropdown/GetAllTaluka?DistrictId=12
-  private talukaurl = 'https://demo-api-hitech.hitechdairy.in/MasterDropdown/GetAllTaluka';
+  private talukaurl = 'https://platform.shauryatechnosoft.com/core-master-service/api/v1/o/sub-district/district/';
 
   // https://demo-api-hitech.hitechdairy.in/MasterDropdown/GetAllVillages?TalukaId=12
-  private villageurl = 'https://demo-api-hitech.hitechdairy.in/MasterDropdown/GetAllVillages';
+  private villageurl = 'https://platform.shauryatechnosoft.com/core-master-service/api/v1/o/town/subdistrict/';
 
   private addrouteurl = 'https://demo-api-hitech.hitechdairy.in/Route/AddRoute';
 
@@ -64,7 +64,7 @@ export class RouteregisterService {
 
   // https://demo-api-hitech.hitechdairy.in/Route/GetAll?UserId=1&pageNo=1&pageSize=10&RouteTypeId=0&TextSearch=&OrgId=279&UnitId=0
   getRouteLists(orgId: number, unitId: number, routetypeId: number, textsearch: string): Observable<any> {
-    localStorage.setItem('token', 'eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMSIsImV4cCI6MTc2MjI2ODMzNiwiaXNzIjoiaHR0cHM6Ly9kZW1vLWFwaS1oaXRlY2guaGl0ZWNoZGFpcnkuaW4vIiwiYXVkIjoiaHR0cHM6Ly9kZW1vLWFwaS1oaXRlY2guaGl0ZWNoZGFpcnkuaW4vIn0.L6uJBU6FcCRQrxHEK01Qr8WbwonGMDA1AXVG26GyRz8');
+    localStorage.setItem('token', 'eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMSIsImV4cCI6MTc2MjM1MDU0MywiaXNzIjoiaHR0cHM6Ly9kZW1vLWFwaS1oaXRlY2guaGl0ZWNoZGFpcnkuaW4vIiwiYXVkIjoiaHR0cHM6Ly9kZW1vLWFwaS1oaXRlY2guaGl0ZWNoZGFpcnkuaW4vIn0.ddxSpj5exidVT7vhGcfpNy3l7YdnrWS1MZ5TiLE7IK8');
     const token = localStorage.getItem('token'); // or sessionStorage
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
@@ -77,14 +77,14 @@ export class RouteregisterService {
   }
 
   getdistrictlists(stateId: number): Observable<any> {
-    return this.http.get(this.districturl + `?StateId=${stateId}`);
+    return this.http.get(this.districturl + stateId);
   }
   gettalukalists(districtId: number): Observable<any> {
-    return this.http.get(this.talukaurl + `?DistrictId=${districtId}`);
+    return this.http.get(this.talukaurl + districtId);
   }
 
   getVillagelists(talukaId: number): Observable<any> {
-    return this.http.get(this.villageurl + `?talukaId=${talukaId}`);
+    return this.http.get(this.villageurl + talukaId);
   }
 
   addroute(data: any): Observable<any> {

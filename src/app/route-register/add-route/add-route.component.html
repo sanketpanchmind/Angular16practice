@@ -7,7 +7,7 @@
             <div class="col-sm">
                 <mat-form-field class="w-100" appearance="outline">
                     <mat-label>Organization</mat-label>
-                    <mat-select formControlName="organization" (selectionChange)="onOrganizationChange($event.value)">
+                    <mat-select formControlName="organization" (selectionChange)="onOrganizationChange()">
                         <mat-option *ngFor="let org of organizationArray; let i=index"
                             [value]="org.id">{{org.organizationName}} </mat-option>
                     </mat-select>
@@ -46,36 +46,36 @@
             <div class="col-sm-auto">
                 <mat-form-field class="w-100" appearance="outline">
                     <mat-label>Select State</mat-label>
-                    <mat-select formControlName="state" (selectionChange)="getdistricts($event.value)">
-                        <mat-option *ngFor="let state of stateArray; let i=index" [value]="state">{{state.stateName}}
+                    <mat-select formControlName="state" (selectionChange)="onChangeDropdown('state')">
+                        <mat-option *ngFor="let state of stateArray; let i=index" [value]="state.stateCode" (click)="addrouteform.controls['stateName'].setValue(state.stateNameIntlang)">{{state.stateNameIntlang}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm-auto">
-                <mat-form-field class="w-100" appearance="outline">
+                <mat-form-field class="w-100" appearance="outline" [class]="!addrouteform.value.state ? addrouteform.controls['district'].disable() : addrouteform.controls['district'].enable()">
                     <mat-label>Select District</mat-label>
-                    <mat-select formControlName="district" (selectionChange)="getTaluka($event.value)">
+                    <mat-select formControlName="district" (selectionChange)="onChangeDropdown('district')">
                         <mat-option *ngFor="let district of districtArray; let i=index"
-                            [value]="district">{{district.districtName}} </mat-option>
+                            [value]="district.districtCode" (click)="addrouteform.controls['districtName'].setValue(district.districtNameIntlang)">{{district.districtNameIntlang}} </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm-auto">
-                <mat-form-field class="w-100" appearance="outline">
+                <mat-form-field class="w-100" appearance="outline" [class]="!addrouteform.getRawValue().district ? addrouteform.controls['taluka'].disable() : addrouteform.controls['taluka'].enable()">
                     <mat-label>Select Taluka</mat-label>
-                    <mat-select formControlName="taluka" (selectionChange)="getVillages($event.value)">
+                    <mat-select formControlName="taluka" (selectionChange)="onChangeDropdown('taluka')">
                         <mat-option *ngFor="let taluka of talukaArray; let i=index"
-                            [value]="taluka">{{taluka.talukaName}}</mat-option>
+                            [value]="taluka.subDistrictCode" (click)="addrouteform.controls['talukaName'].setValue(taluka.subDistrictNameIntlang)">{{taluka.subDistrictNameIntlang}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm-auto">
-                <mat-form-field class="w-100" appearance="outline">
+                <mat-form-field class="w-100" appearance="outline" [class]="!addrouteform.getRawValue().taluka ? addrouteform.controls['village'].disable() : addrouteform.controls['village'].enable()">
                     <mat-label>Select Town/Village</mat-label>
                     <mat-select formControlName="village">
                         <mat-option *ngFor="let village of villageArray; let i=index"
-                            [value]="village">{{village.villageName}} </mat-option>
+                            [value]="village.townCode" (click)="addrouteform.controls['villageName'].setValue(village.townNameIntlang)">{{village.townNameIntlang}} </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -127,9 +127,9 @@
             </ng-container>
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
-                <td mat-cell *matCellDef="let element">
+                <td mat-cell *matCellDef="let element;let i=index">
                     <div class="d-flex align-items-center gap-2">
-                        <button mat-icon-button (click)="edit(element)"> <mat-icon>edit</mat-icon></button>
+                        <button mat-icon-button (click)="edit(i,element)"> <mat-icon>edit</mat-icon></button>
                         <button mat-icon-button (click)="delete(element.srno)"> <mat-icon>delete</mat-icon></button>
                     </div>
                 </td>

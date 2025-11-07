@@ -54,19 +54,19 @@ export class AddRouteComponent {
   initializeform() {
     this.addrouteform = this.fb.group({
       organization: ['', Validators.required],
-      unit: [{ value: '', disabled: true }, Validators.required],
+      unit: ['', Validators.required],
       routetype: ['', Validators.required],
       routecode: ['', Validators.required],
       routename: ['', Validators.required],
       state: ['', Validators.required],
       stateName: [''],
-      district: [{ value: '', disabled: true }, Validators.required],
+      district: ['', Validators.required],
       districtName: [''],
-      taluka: [{ value: '', disabled: true }, Validators.required],
+      taluka: ['', Validators.required],
       talukaName: [''],
-      village: [{ value: '', disabled: true }],
+      village: [''],
       villageName: [''],
-      area: [{ value: '', disabled: true }]
+      area: ['']
     })
   }
 
@@ -86,15 +86,15 @@ export class AddRouteComponent {
     })
   }
 
-  onOrganizationChange(orgId: number) {
-    this.addrouteform.get('unit')?.enable();
-    orgId = this.addrouteform.value.organization;
+  onOrganizationChange() {
+  //  this.addrouteform.patchValue({ unit: '' });
+    const orgId = this.addrouteform.value.organization;
     this.routeregisterservice.getUnits(orgId).subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.unitArray = res.responseData;
+          console.log("unit array - ", this.unitArray);
           // this.routeregisterservice.statusMessage(res.statusMessage, 0);
-          this.addrouteform.patchValue({ unit: '' });
         }
       },
       error: (error: any) => {
@@ -108,6 +108,7 @@ export class AddRouteComponent {
     this.routeregisterservice.getRouteType().subscribe({
       next: (res: any) => {
         if (res.statusCode == 200) {
+          console.log("routetypeArray array - ", this.routetypeArray);
           this.routetypeArray = res.responseData;
         }
       },
@@ -121,132 +122,133 @@ export class AddRouteComponent {
   getstate() {
     this.routeregisterservice.getstatelists().subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.stateArray = res.responseData;
-        }
+        console.log("state ar - ", res.data)
+        this.stateArray = res.status == 'success' ? res.data : [];
       },
-      error: (error: any) => {
-        console.log("error - ", error);
-        // this.routeregisterservice.statusMessage(error.statusMessage, 1);
+      error: () => {
+        this.stateArray = [];
       }
     })
   }
 
-  getdistricts(stateId: number) {
-    this.addrouteform.get('district')?.enable();
-    stateId = this.addrouteform.value.state.id;
+  getdistricts() {
+    const stateId = this.addrouteform.value.state;
+    console.log("state id", stateId);
 
     this.routeregisterservice.getdistrictlists(stateId).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.districtArray = res.responseData;
-        }
+        this.districtArray = res.status == 'success' ? res.data : [];
       },
-      error: (error: any) => {
-        console.log("error - ", error);
-        // this.routeregisterservice.statusMessage(error.statusMessage, 1);
+      error: () => {
+        this.districtArray = [];
       }
     })
   }
 
-  getTaluka(districtId: number) {
-    this.addrouteform.get('taluka')?.enable();
-    districtId = this.addrouteform.value.district.id;
-
-    const villageControl = this.addrouteform.get('village');
-    const areaControl = this.addrouteform.get('area');
-
-    // Reset dependent fields
-    villageControl?.reset();
-    areaControl?.reset();
-
-    // Disable until data is ready
-    villageControl?.disable();
-    areaControl?.disable();
-
-
-
+  getTaluka() {
+    const districtId = this.addrouteform.value.district;
+    console.log("dis id", districtId);
     this.routeregisterservice.gettalukalists(districtId).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.talukaArray = res.responseData;
-        }
+        this.talukaArray = res.status == 'success' ? res.data : [];
+
       },
-      error: (error: any) => {
-        console.log("error - ", error);
-        // this.routeregisterservice.statusMessage(error.statusMessage, 1);
+      error: () => {
+        this.talukaArray = [];
       }
     })
   }
-  getVillages(talukaId: number) {
-    this.addrouteform.get('village')?.enable();
-    talukaId = this.addrouteform.value.state.id;
-
-    this.addrouteform.get('area')?.enable();
+  getVillages() {
+    const talukaId = this.addrouteform.getRawValue().taluka;
+    console.log("taluka id", talukaId);
     this.routeregisterservice.getVillagelists(talukaId).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
-          this.villageArray = res.responseData;
-        }
+        this.villageArray = res.status == 'success' ? res.data : [];
+
       },
       error: (error: any) => {
-        console.log("error - ", error);
-        // this.routeregisterservice.statusMessage(error.statusMessage, 1);
+        this.villageArray = [];
       }
     })
   }
-
+  onChangeDropdown(flag: string) {
+    if (flag == 'state') {
+      this.districtArray = [];
+      this.talukaArray = [];
+      this.villageArray = [];
+      this.addrouteform.controls['district'].reset();
+      this.addrouteform.controls['districtName'].reset();
+      this.addrouteform.controls['taluka'].reset();
+      this.addrouteform.controls['talukaName'].reset();
+      this.addrouteform.controls['village'].reset();
+      this.addrouteform.controls['villageName'].reset();
+      this.getdistricts();
+    } else if (flag == 'district') {
+      this.talukaArray = [];
+      this.villageArray = [];
+      this.addrouteform.controls['taluka'].reset();
+      this.addrouteform.controls['talukaName'].reset();
+      this.addrouteform.controls['village'].reset();
+      this.addrouteform.controls['villageName'].reset();
+      this.getTaluka();
+    } else if (flag == 'taluka') {
+      this.villageArray = [];
+      this.addrouteform.controls['village'].reset();
+      this.addrouteform.controls['villageName'].reset();
+      this.getVillages();
+    }
+  }
   addroute() {
     const formValue = this.addrouteform.value;
 
     const newRecord = {
       srno: this.FormDataId++,
-      stateId: formValue.state.id,
-      stateName: formValue.state.stateName,
-      districtId: formValue.district.id,
-      districtName: formValue.district.districtName,
-      talukaId: formValue.taluka.id,
-      talukaName: formValue.taluka.talukaName,
-      villageId: formValue.village.id,
-      villageName: formValue.village.villageName,
+      stateId: formValue.stateCode,
+      stateName: formValue.stateName,
+      districtId: formValue.districtCode,
+      districtName: formValue.districtName,
+      talukaId: formValue.taluka,
+      talukaName: formValue.talukaName,
+      villageId: formValue.village,
+      villageName: formValue.villageName,
       areaName: formValue.area
     };
+
     console.log("New Record:", newRecord);
-    this.FormData.push(newRecord);
-    this.dataSource.data = this.FormData;;
+    console.log("this.editObj?.index", this.editObj?.index);
+
+    this.editObj?.index != undefined ? this.FormData.splice(this.editObj.index, 1, newRecord) : this.FormData.push(newRecord);
+    this.dataSource.data = this.FormData;
+
     this.addrouteform.get('village')?.reset();
     this.addrouteform.get('area')?.reset();
+    this.editObj = '';
   }
 
+  editObj: any;
+  edit(index: number, record: any) {
+    // this.editObj.index = index;
+  
+      console.log("Editing record:", record, this.addrouteform.value);
 
+      const address = this.routedata.routePIdbyVillages?.[index];
+      console.log("aqddress", address);
 
-  edit(record: any) {
-    console.log("Editing record:", record);
-    console.log("Editing record:", this.stateArray);
-
-    // Enable dependent dropdowns first
-    this.addrouteform.get('district')?.enable({ emitEvent: false });
-    this.addrouteform.get('taluka')?.enable({ emitEvent: false });
-    this.addrouteform.get('village')?.enable({ emitEvent: false });
-    this.addrouteform.get('area')?.enable({ emitEvent: false });
-
-    // Find actual objects from arrays
-    const selectedState = this.stateArray.find(s => s.stateName === record.stateName || s.id === record.stateId);
-    const selectedDistrict = this.districtArray.find(d => d.districtId === record.districtId || d.id === record.districtId);
-    const selectedTaluka = this.talukaArray.find(t => t.talukaId === record.talukaId || t.id === record.talukaId);
-    const selectedVillage = this.villageArray.find(v => v.villageId === record.villageId || v.id === record.villageId);
-
-
-    // Patch form with the actual objects
-    this.addrouteform.patchValue({
-      state: selectedState.id || null,
-      district: selectedDistrict || null,
-      taluka: selectedTaluka || null,
-      village: selectedVillage || null,
-      area: record.areaName
-    });
-
-    console.log("Form after patch:", this.addrouteform.value);
+      this.addrouteform.patchValue({
+        state: this.routedata.routePIdbyVillages?.[index].stateCode,
+        stateName: address.stateName,
+        district: address.districtCode,
+        districtName: address.districtName,
+        taluka: address.subDistrictCode,
+        talukaName: address.subDistrict,
+        village: address.townCode,
+        villageName: address.town,
+        area: address.areas
+      });
+      this.getdistricts();
+      this.getTaluka();
+      this.getVillages();
+    
   }
 
   update() {
@@ -336,6 +338,7 @@ export class AddRouteComponent {
 
   editDialog() {
     console.log("edit data - ", this.routedata);
+
     this.addrouteform.get('unit')?.enable();
     this.addrouteform.patchValue({
       organization: this.routedata.organizationId,
@@ -344,20 +347,20 @@ export class AddRouteComponent {
       routecode: this.routedata.routeCode,
       routename: this.routedata.routeName,
     });
-
+    this.onOrganizationChange();
     const mappedData = this.routedata.routePIdbyVillages.map((x: any, index: number) => ({
       srno: index + 1,
-      stateId: x.stateId,
+      stateId: x.stateCode,
       stateName: x.state,
-      districtId: x.districtId,
+      districtId: x.districtCode,
       districtName: x.district,
-      talukaId: x.talukaId,
-      talukaName: x.taluka,
-      villageId: x.villageId,
+      talukaId: x.subDistrictCode,
+      talukaName: x.subDistrict,
+      villageId: x.townCode,
       villageName: x.town,
       areaName: x.areas || ''
     }));
-
+    console.log("mapped data - ", mappedData);
     this.dataSource.data = mappedData;
     this.FormData = [...mappedData];
     this.FormDataId = this.FormData.length;
