@@ -1,0 +1,44 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9">
+            <p>coding-practice-one works!</p>
+
+            <form>
+                <input type="text" name="orignialStringOne" [(ngModel)]="orignialStringOne">
+                <button (click)="checkPlaindrome()">check</button>
+            </form>
+
+
+            <h6>Reverse each word in string</h6>
+            <input type="text" name="erverseeachword" [(ngModel)]="secondString">
+            <button (click)="reverseEachString()">check</button>
+        </div>
+        <div class="col-sm">
+            <form #todolistform="ngForm">
+
+                <h5>Todo List APp</h5>
+                <input type="text" name="tasks" [(ngModel)]="tasksname">
+                <button (click)="addTasksName()">Add tasks</button>
+
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let todolist of this.todoListArray; let i=index">
+                        <div class="row">
+                            <div class="col-sm-auto">{{i + 1}} </div>
+                            <div class="col-sm-auto border-end">{{todolist}}</div>
+                            <div class="col-sm-auto border-end">
+                                <div class="d-flex align-items-center gap-2">
+                                    <button (click)="edit(i,todolist)">edit</button>
+                                    <button (click)="delete(i)">delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+
+        </div>
+    </div>
+
+
+</div>
