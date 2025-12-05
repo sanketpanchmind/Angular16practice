@@ -88,6 +88,7 @@ const routes: Routes = [
   {path:'route-register', loadChildren: () => import('./route-register/route-register.module').then(m => m.RouteRegisterModule)},
   { path: 'coding-practice-one', loadChildren: () => import('./coding-practice-one/coding-practice-one.module').then(m => m.CodingPracticeOneModule) },
   { path: 'todlist', loadChildren: () => import('./todolist/todolist.module').then(m => m.TodolistModule) },
+  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
 
 
 
