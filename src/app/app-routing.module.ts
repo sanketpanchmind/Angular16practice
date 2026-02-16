@@ -89,6 +89,7 @@ const routes: Routes = [
   { path: 'coding-practice-one', loadChildren: () => import('./coding-practice-one/coding-practice-one.module').then(m => m.CodingPracticeOneModule) },
   { path: 'todlist', loadChildren: () => import('./todolist/todolist.module').then(m => m.TodolistModule) },
   { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
+  { path: 'map-implement', loadChildren: () => import('./map-implement/map-implement.module').then(m => m.MapImplementModule) },
 
 
 

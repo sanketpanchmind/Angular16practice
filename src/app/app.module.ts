@@ -58,6 +58,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AssetListComponent } from './asset-list/asset-list.component';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './auth.interceptor';
+import { DemopipePipe } from './custom-pipes/demopipe.pipe';
 
 
 export function httpTranslateLoaderFactory(http: HttpClient) {
@@ -102,6 +103,7 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
     RenderTranslationComponent,
     AssetListComponent,
     LoginComponent,
+    DemopipePipe,
   ],
   imports: [
     BrowserModule,
